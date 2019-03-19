@@ -3,14 +3,9 @@ const express = require('express');
 const helmet = require('helmet');
 const knex = require('knex');
 
-const knexConfig = {
-  client: 'sqlite3',
-  connection: {
-    filename: './data/rolex.db3',
-  },
-  useNullAsDefault: true, // needed for sqlite
-};
-const db = knex(knexConfig);
+const knexConfig = require('./knexfile.js');
+
+const db = knex(knexConfig.development);
 
 const server = express();
 
@@ -94,5 +89,5 @@ server.delete('/api/roles/:id', async (req, res) => {
   } catch (error) {}
 });
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 9090;
 server.listen(port, () => console.log(`\nrunning on ${port}\n`));
